@@ -82,15 +82,24 @@ namespace RestRequest
             var dic = new Dictionary<char, string>()
             {
                 ['{'] = '{' + Environment.NewLine,
-                ['}'] = Environment.NewLine + '}' + Environment.NewLine,
+                ['}'] = '}' + Environment.NewLine,
                 ['['] = "[" + Environment.NewLine,
-                [']'] = Environment.NewLine + "]" + Environment.NewLine,
+                [']'] = "]" + Environment.NewLine,
                 [','] = ',' + Environment.NewLine
             };
 
             for (int i = 0; i < json.Length; i++)
             {
                 tab.Clear();
+
+                if (i > 0 && json[i - 1] == '"' &&
+                    (json[i] == ']' || json[i] == '}'))
+                {
+                    counter--;
+
+                    sb.Append(json[i]);
+                    continue;
+                }
 
                 if (json[i] == ',')
                 {
@@ -111,7 +120,8 @@ namespace RestRequest
                         tab.Append("   ");
                     }
 
-                    sb.Append(dic[json[i]]).Append(tab.ToString());
+                    sb.Append(dic[json[i]])
+                        .Append(tab.ToString());
                     continue;
                 }
 
@@ -123,13 +133,22 @@ namespace RestRequest
                         tab.Append("   ");
                     }
 
-                    if (i < json.Length - 1 && json[i + 1] == ',')
+                    if (i < json.Length - 1 && (json[i + 1] == '}' || json[i + 1] == ']' || json[i + 1] == ','))
                     {
                         sb.Append(json[i]);
                         continue;
                     }
 
-                    sb.Append(dic[json[i]]).Append(tab.ToString());
+                    if (i > 0 && i < json.Length - 1 && json[i + 1] == ',')
+                    {
+                        counter--;
+                        sb.Append(json[i]);
+                        continue;
+                    }
+
+                    sb.Append(Environment.NewLine)
+                        .Append(dic[json[i]])
+                        .Append(tab.ToString());
                     continue;
                 }
 
