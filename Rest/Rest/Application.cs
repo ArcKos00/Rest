@@ -41,7 +41,7 @@ namespace RestRequest
             var user23 = await _userService.GetUserAsync(23);
             _logger.LogInformation(JsonConvert.SerializeObject(user23));
 
-            var listResource = await _resourceService.GetAllResourcesAsync();
+            var listResource = await _resourceService.GetResourcesAsync();
             _logger.LogInformation(JsonConvert.SerializeObject(listResource));
 
             var singleResource = await _resourceService.GetResourceAsync(2);
