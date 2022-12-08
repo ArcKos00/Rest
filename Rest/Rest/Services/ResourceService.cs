@@ -5,7 +5,6 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-using Rest.Dtos.Response;
 using RestRequest.Configs;
 using RestRequest.Dtos;
 using RestRequest.Dtos.Response;
