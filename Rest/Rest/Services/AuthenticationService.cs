@@ -31,7 +31,7 @@ namespace RestRequest.Services
 
         public async Task<AuthenticationResponse?> LoginAsync(string email, string password = null!)
         {
-            var result = await _clientHttp.SendAsync<AuthenticationRequest, Pager<AuthenticationResponse>>(
+            var result = await _clientHttp.SendAsync<AuthenticationRequest, AuthenticationResponse>(
                 $"{_apiConfig.Host}{_login}",
                 HttpMethod.Post,
                 new AuthenticationRequest()
@@ -40,17 +40,17 @@ namespace RestRequest.Services
                     Password = password
                 });
 
-            if (result.Data?.Error == null)
+            if (result != null)
             {
                 _logger.LogWarning("Authentication is successful");
             }
 
-            return result?.Data;
+            return result;
         }
 
         public async Task<AuthenticationResponse?> RegisterAsync(string email, string password = null!)
         {
-            var result = await _clientHttp.SendAsync<AuthenticationRequest, Pager<AuthenticationResponse>>(
+            var result = await _clientHttp.SendAsync<AuthenticationRequest, AuthenticationResponse>(
                 $"{_apiConfig.Host}{_register}",
                 HttpMethod.Post,
                 new AuthenticationRequest()
@@ -59,12 +59,12 @@ namespace RestRequest.Services
                     Password = password
                 });
 
-            if (result.Data?.Error == null)
+            if (result != null)
             {
                 _logger.LogWarning("Authentication is successful");
             }
 
-            return result?.Data;
+            return result;
         }
     }
 }
