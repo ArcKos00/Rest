@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using Rest.Dtos.Response;
 using RestRequest.Configs;
 using RestRequest.Dtos;
 using RestRequest.Dtos.Request;
@@ -65,9 +66,9 @@ namespace RestRequest.Services
             return result;
         }
 
-        public async Task<BaseResponse<List<UserDto>>?> GetListUsersOnPageAsync(int page)
+        public async Task<Pager<List<UserDto>>?> GetListUsersOnPageAsync(int page)
         {
-            var result = await _clientHttp.SendAsync<object, BaseResponse<List<UserDto>>>(
+            var result = await _clientHttp.SendAsync<object, Pager<List<UserDto>>>(
                 $"{_apiConfig.Host}{_userApi}?page={page}",
                 HttpMethod.Get);
             if (result != null)
@@ -107,13 +108,13 @@ namespace RestRequest.Services
                 HttpMethod.Delete);
             if (result == string.Empty)
             {
-                _logger.LogInformation($"Delete user with id{id} was successful");
+                _logger.LogInformation($"Delete user with id {id} was successful");
             }
         }
 
-        public async Task<BaseResponse<List<UserDto>>?> UserDelayAsync(int page)
+        public async Task<Pager<List<UserDto>>?> UserDelayAsync(int page)
         {
-            var result = await _clientHttp.SendAsync<object, BaseResponse<List<UserDto>>>(
+            var result = await _clientHttp.SendAsync<object, Pager<List<UserDto>>>(
                 $"{_apiConfig.Host}{_userApi}?delay={page}",
                 HttpMethod.Get);
             if (result != null)

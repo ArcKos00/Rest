@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using Rest.Dtos.Response;
 using RestRequest.Configs;
 using RestRequest.Dtos;
 using RestRequest.Dtos.Response;
@@ -42,9 +43,9 @@ namespace RestRequest.Services
             return result;
         }
 
-        public async Task<BaseResponse<List<ResourceDto>>?> GetAllResourcesAsync()
+        public async Task<Pager<List<ResourceDto>>?> GetResourcesAsync()
         {
-            var result = await _clientHttp.SendAsync<object, BaseResponse<List<ResourceDto>>>(
+            var result = await _clientHttp.SendAsync<object, Pager<List<ResourceDto>>>(
                 $"{_apiConfig.Host}{_resourceApi}",
                 HttpMethod.Get);
 

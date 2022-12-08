@@ -10,7 +10,7 @@ namespace RestRequest.Services.Abstractions
 {
     public interface IResourceService
     {
-        public Task<BaseResponse<ResourceDto>?> GetResourceAsync(int id);
-        public Task<BaseResponse<List<ResourceDto>>?> GetAllResourcesAsync();
+        public Task<Pager<ResourceDto>?> GetResourceAsync(int id);
+        public Task<Pager<List<ResourceDto>>?> GetResourcesAsync();
     }
 }
